@@ -57,6 +57,8 @@ That's it! 🎉
 
 ## Usage
 
+### Using Docker Compose (Recommended)
+
 ```bash
 # Start the bot
 docker-compose up -d
@@ -67,14 +69,69 @@ docker-compose logs -f
 # Stop the bot
 docker-compose down
 
+# Restart the bot
+make restart
+```
+
+### Using Docker Run
+
+**Option 1: With .env file**
+
+```bash
+# Pull the image from Docker Hub
+docker pull ecleptic/strava-teams-bot:latest
+
+# Run the container
+docker run -d \
+  --name strava-teams-bot \
+  --network host \
+  --restart unless-stopped \
+  -v $(pwd)/tokens.json:/app/tokens.json \
+  --env-file .env \
+  ecleptic/strava-teams-bot:latest
+```
+
+**Option 2: Without .env file (pass variables directly)**
+
+```bash
+# Pull the image
+docker pull ecleptic/strava-teams-bot:latest
+
+# Run with environment variables
+docker run -d \
+  --name strava-teams-bot \
+  --network host \
+  --restart unless-stopped \
+  -v $(pwd)/tokens.json:/app/tokens.json \
+  -e STRAVA_CLIENT_ID=your_client_id \
+  -e STRAVA_CLIENT_SECRET=your_client_secret \
+  -e STRAVA_REFRESH_TOKEN=your_refresh_token \
+  -e TEAMS_WEBHOOK_URL=your_webhook_url \
+  -e TIMEZONE=America/New_York \
+  -e SCHEDULE_HOUR=9 \
+  -e SCHEDULE_MINUTE=0 \
+  ecleptic/strava-teams-bot:latest
+```
+
+**Managing the container:**
+
+```bash
+# View logs
+docker logs -f strava-teams-bot
+
+# Stop the bot
+docker stop strava-teams-bot
+docker rm strava-teams-bot
+```
+
+### Testing
+
+```bash
 # Test posting (dry run - no actual posting)
 make dry-run
 
 # Test posting to Teams
 make test
-
-# Restart the bot
-make restart
 ```
 
 ## Configuration
