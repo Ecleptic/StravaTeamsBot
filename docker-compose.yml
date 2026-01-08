@@ -1,0 +1,16 @@
+services:
+  bot:
+    build: .
+    container_name: strava-teams-bot
+    network_mode: "host"
+    env_file:
+      - .env
+    volumes:
+      # Persist token file across container restarts
+      - ./tokens.json:/app/tokens.json
+    restart: unless-stopped
+    environment:
+      - TZ=America/Denver
+    # Only build when needed
+    image: strava-teams-bot:latest
+
