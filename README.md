@@ -1,5 +1,8 @@
 # Strava Teams Bot
 
+[![Docker Hub](https://img.shields.io/docker/v/ecleptic/strava-teams-bot?logo=docker&label=Docker%20Hub)](https://hub.docker.com/r/ecleptic/strava-teams-bot)
+[![Docker Pulls](https://img.shields.io/docker/pulls/ecleptic/strava-teams-bot)](https://hub.docker.com/r/ecleptic/strava-teams-bot)
+
 A Docker-based bot that automatically posts your Strava activities to Microsoft Teams.
 
 ## Features
