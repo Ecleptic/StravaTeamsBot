@@ -246,7 +246,7 @@ class TeamsPoster:
                     headers={'Content-Type': 'application/json'}
                 )
                 
-                if response.status_code == 200:
+                if response.status_code in [200, 202]:
                     print(f"✓ Posted activity: {activity.name}")
                 else:
                     print(f"✗ Failed to post activity: {activity.name} - Status: {response.status_code}")
