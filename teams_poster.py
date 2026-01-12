@@ -257,53 +257,8 @@ class TeamsPoster:
     def post_summary(self, activities):
         """Post a summary card with all activities"""
         if not activities:
-            # Post "no activities" message
-            card = {
-                "type": "message",
-                "attachments": [
-                    {
-                        "contentType": "application/vnd.microsoft.card.adaptive",
-                        "content": {
-                            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-                            "type": "AdaptiveCard",
-                            "version": "1.4",
-                            "body": [
-                                {
-                                    "type": "TextBlock",
-                                    "text": "📊 Daily Strava Summary",
-                                    "size": "Large",
-                                    "weight": "Bolder",
-                                    "color": "Accent"
-                                },
-                                {
-                                    "type": "TextBlock",
-                                    "text": f"{datetime.now().strftime('%A, %B %d, %Y')}",
-                                    "size": "Medium",
-                                    "spacing": "None"
-                                },
-                                {
-                                    "type": "TextBlock",
-                                    "text": "No activities in the last 24 hours. Rest day! 😴",
-                                    "wrap": True,
-                                    "spacing": "Medium"
-                                }
-                            ]
-                        }
-                    }
-                ]
-            }
-            
-            try:
-                response = requests.post(
-                    self.webhook_url,
-                    json=card,
-                    headers={'Content-Type': 'application/json'}
-                )
-                if response.status_code == 200:
-                    print("✓ Posted 'no activities' summary")
-            except Exception as e:
-                print(f"✗ Error posting summary: {str(e)}")
-            
+            # Skip posting when there are no activities
+            print("No activities in the last 24 hours - skipping post")
             return
         
         # Post individual activity cards
