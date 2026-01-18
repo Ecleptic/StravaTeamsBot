@@ -13,8 +13,9 @@ TEAMS_WEBHOOK_URL = os.getenv('TEAMS_WEBHOOK_URL')
 
 # Scheduling Configuration
 TIMEZONE = os.getenv('TIMEZONE', 'America/New_York')
-SCHEDULE_HOUR = int(os.getenv('SCHEDULE_HOUR', '9'))
-SCHEDULE_MINUTE = int(os.getenv('SCHEDULE_MINUTE', '0'))
+# Cron format: minute hour day month day-of-week
+# Default: 9:00 AM on weekdays (Monday-Friday)
+SCHEDULE_CRON = os.getenv('SCHEDULE_CRON', '0 9 * * 1-5')
 
 # Lookback period in hours
 LOOKBACK_HOURS = int(os.getenv('LOOKBACK_HOURS', '24'))

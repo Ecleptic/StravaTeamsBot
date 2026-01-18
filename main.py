@@ -69,12 +69,8 @@ def main():
     # Set up scheduler
     scheduler = BlockingScheduler(timezone=pytz.timezone(config.TIMEZONE))
     
-    # Schedule daily at specified time
-    trigger = CronTrigger(
-        hour=config.SCHEDULE_HOUR,
-        minute=config.SCHEDULE_MINUTE,
-        timezone=config.TIMEZONE
-    )
+    # Schedule using cron expression
+    trigger = CronTrigger.from_crontab(config.SCHEDULE_CRON, timezone=config.TIMEZONE)
     
     scheduler.add_job(
         post_activities,
@@ -88,7 +84,7 @@ def main():
     print("Strava Teams Bot Started")
     print(f"{'='*60}")
     print(f"Timezone: {config.TIMEZONE}")
-    print(f"Schedule: Daily at {config.SCHEDULE_HOUR:02d}:{config.SCHEDULE_MINUTE:02d}")
+    print(f"Schedule (cron): {config.SCHEDULE_CRON}")
     print(f"{'='*60}\n")
     
     try:
