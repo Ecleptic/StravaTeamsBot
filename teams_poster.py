@@ -157,9 +157,13 @@ class TeamsPoster:
         })
         
         # Date and time
+        if config.SHOW_WORKOUT_TIME:
+            date_time_text = f"{date_str} at {time_str}"
+        else:
+            date_time_text = date_str
         body.append({
             "type": "TextBlock",
-            "text": f"{date_str} at {time_str}",
+            "text": date_time_text,
             "size": "Small",
             "color": "Default",
             "spacing": "None"

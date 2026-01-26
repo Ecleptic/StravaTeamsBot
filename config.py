@@ -20,6 +20,10 @@ SCHEDULE_CRON = os.getenv('SCHEDULE_CRON', '0 9 * * 1-5')
 # Lookback period in hours
 LOOKBACK_HOURS = int(os.getenv('LOOKBACK_HOURS', '24'))
 
+# Display Configuration
+# Show workout time in Teams posts (default: true)
+SHOW_WORKOUT_TIME = os.getenv('SHOW_WORKOUT_TIME', 'true').lower() != 'false'
+
 # Token storage
 TOKEN_FILE = 'tokens.json'
 
