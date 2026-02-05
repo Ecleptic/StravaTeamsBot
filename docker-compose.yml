@@ -11,6 +11,7 @@ services:
     restart: unless-stopped
     environment:
       - TZ=America/Denver
+      - SHOW_WORKOUT_TIME=false
     # Only build when needed
     image: strava-teams-bot:latest
 

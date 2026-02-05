@@ -156,6 +156,23 @@ class TeamsPoster:
             "weight": "Bolder"
         })
         
+        # Athlete name
+        athlete_name = None
+        if hasattr(activity, 'athlete') and activity.athlete:
+            first = getattr(activity.athlete, 'firstname', '') or ''
+            last = getattr(activity.athlete, 'lastname', '') or ''
+            athlete_name = f"{first} {last}".strip()
+        
+        if athlete_name:
+            body.append({
+                "type": "TextBlock",
+                "text": f"by {athlete_name}",
+                "size": "Small",
+                "weight": "Lighter",
+                "color": "Accent",
+                "spacing": "None"
+            })
+        
         # Date and time
         if config.SHOW_WORKOUT_TIME:
             date_time_text = f"{date_str} at {time_str}"
