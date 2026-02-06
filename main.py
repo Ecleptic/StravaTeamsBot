@@ -21,6 +21,11 @@ def post_activities(dry_run=False):
         strava = StravaClient()
         teams = TeamsPoster(dry_run=dry_run)
         
+        # Get athlete info
+        athlete = strava.get_athlete()
+        athlete_name = f"{athlete.firstname} {athlete.lastname}".strip()
+        print(f"Athlete: {athlete_name}")
+        
         # Get recent activities
         print(f"Fetching activities from the last {config.LOOKBACK_HOURS} hours...")
         activities = strava.get_recent_activities(hours=config.LOOKBACK_HOURS)
@@ -28,7 +33,7 @@ def post_activities(dry_run=False):
         print(f"Found {len(activities)} activity(ies)")
         
         # Post to Teams
-        teams.post_summary(activities)
+        teams.post_summary(activities, athlete_name=athlete_name)
         
         print(f"\n{'='*60}")
         print("✓ Completed successfully")

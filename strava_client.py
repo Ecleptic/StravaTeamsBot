@@ -89,3 +89,8 @@ class StravaClient:
         """Get detailed information about a specific activity"""
         self._refresh_access_token()
         return self.client.get_activity(activity_id)
+    
+    def get_athlete(self):
+        """Get the authenticated athlete's profile"""
+        self._refresh_access_token()
+        return self.client.get_athlete()

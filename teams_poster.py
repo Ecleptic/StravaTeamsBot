@@ -8,7 +8,7 @@ class TeamsPoster:
         self.webhook_url = config.TEAMS_WEBHOOK_URL
         self.dry_run = dry_run
     
-    def format_activity_card(self, activity):
+    def format_activity_card(self, activity, athlete_name=None):
         """Format a Strava activity as a Teams Adaptive Card"""
         
         # Format date
@@ -157,12 +157,6 @@ class TeamsPoster:
         })
         
         # Athlete name
-        athlete_name = None
-        if hasattr(activity, 'athlete') and activity.athlete:
-            first = getattr(activity.athlete, 'firstname', '') or ''
-            last = getattr(activity.athlete, 'lastname', '') or ''
-            athlete_name = f"{first} {last}".strip()
-        
         if athlete_name:
             body.append({
                 "type": "TextBlock",
@@ -226,14 +220,14 @@ class TeamsPoster:
         
         return card
     
-    def post_activities(self, activities):
+    def post_activities(self, activities, athlete_name=None):
         """Post activities to Teams"""
         if not activities:
             print("No activities to post")
             return
         
         for activity in activities:
-            card = self.format_activity_card(activity)
+            card = self.format_activity_card(activity, athlete_name=athlete_name)
             if self.dry_run:
                 print(f"\n{'='*60}")
                 print(f"ACTIVITY: {activity.name}")
@@ -275,7 +269,7 @@ class TeamsPoster:
             except Exception as e:
                 print(f"✗ Error posting activity: {activity.name} - {str(e)}")
     
-    def post_summary(self, activities):
+    def post_summary(self, activities, athlete_name=None):
         """Post a summary card with all activities"""
         if not activities:
             # Skip posting when there are no activities
@@ -283,4 +277,4 @@ class TeamsPoster:
             return
         
         # Post individual activity cards
-        self.post_activities(activities)
+        self.post_activities(activities, athlete_name=athlete_name)
